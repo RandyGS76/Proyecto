@@ -1,18 +1,38 @@
 #include "mainwindow.h"
 
 #include <QApplication>
-#include <map>
-#include <iostream>
+#include <hauffman.cpp>
+
+void printTree(Node * tree){
+    if (tree == NULL){
+        return;
+    }
+
+    std::cout << "[ " << tree->getValue() << ", " << tree->getAmount() << " ]" << std::endl;
+
+    printTree(tree->getLeftChild());
+    printTree(tree->getRightChild());
+}
 
 int main(int argc, char *argv[])
 {
-    std::map<std::string, int> m;
+    Huffman * h = new Huffman();
+    std::string x = "abeja";
 
-    m["Hola"] = 1;
+    Node * tree = h->generateTree(x);
+    std::string rst = "";
 
-    if (m.find("Hola") != m.end()){
-        std::cout << m["Hola"] << std::endl;
+    for (auto it = x.begin(); it != x.end(); it++){
+        rst += tree->getAmountInTree(*it);
     }
+
+    std::cout << "CODED: " << rst << std::endl;
+
+    while (rst.size() != 0){
+        std::cout << tree->findValueInTree(&rst);
+    }
+
+    std::cout << std::endl;
 
     return 0;
     /*QApplication a(argc, argv);

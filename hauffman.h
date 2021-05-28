@@ -5,15 +5,17 @@
 #include <node.cpp>
 #include <map>
 #include <list>
-
-class Hauffman
+#include <iostream>
+class Huffman
 {
 public:
-    Hauffman();
+    Huffman();
 
-    Node generateTree(std::string text);
-    std::map<std::string, int> generateMap(std::string text);
-    std::list<Node> generateList(std::map<std::string, int> mapa);
+    Node * generateTree(std::string text);
+    int getTotalProb(std::list<Node*> lista);
+    std::map<char, int> generateMap(std::string text);
+    std::list<Node*> generateList(std::map<char, int> mapa);
+    static bool compare_huffman(Node * first, Node * second);
 };
 
 #endif // HAUFFMAN_H
