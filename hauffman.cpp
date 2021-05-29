@@ -4,8 +4,104 @@ bool Huffman::compare_huffman(Node * first, Node * second){
     return first->getAmount() > second->getAmount() && first->getValue() > second->getValue();
 }
 
+bool Huffman::save_file(std::string path, std::string data){
+    std::fstream out;
+
+    out.open(path, std::ios::out | std::ofstream::trunc);
+
+    out << data;
+
+    out.close();
+
+    return true;
+}
+
 Huffman::Huffman()
 {
+}
+
+// Convierte un mapa a un string
+// O(n)
+std::string Huffman::generateCSV(std::map<char, int> mapa){
+    std::string rst = "Letra, Valor\n";
+
+    for (std::map<char, int>::iterator data = mapa.begin(); data != mapa.end(); data++){
+        Node * node = new Node(data->first, data->second);
+        std::string value = std::to_string(data->second);
+
+        rst += std::to_string(int(data->first)) + "," + value + "\n";
+    }
+
+    return rst;
+}
+
+// Convierte un CSV generado por el programa a un mapa
+// O(n)
+std::list<std::list<std::string>> Huffman::decodeCSV(std::string csvPath){
+    std::list<std::list<std::string>> data;
+
+    std::fstream fin;
+
+    fin.open(csvPath, std::ios::in);
+
+    std::string temp, line;
+
+    while (std::getline(fin, line)){
+        std::istringstream iss(line);
+
+        std::list<std::string> row;
+        std::string word;
+
+        std::stringstream s(line);
+
+        while (getline(s, word, ',')){
+            row.push_back(word);
+        }
+
+        data.push_back(row);
+    }
+
+    return data;
+}
+
+// Convierte una lista decodificada de un CSV a un mapa
+// O(n)
+std::map<char, int> Huffman::decodedCSVToMap(std::list<std::list<std::string>> data){
+    std::map<char, int> rst;
+
+    for (auto it = data.begin(); it != data.end(); it++){
+        if (it == data.begin()) continue;
+
+        auto jt = (*it).begin();
+
+        char letra = std::atoi((*jt).c_str());
+        jt++;
+        int value = std::atoi((*jt).c_str());
+    }
+
+    return rst;
+}
+
+// Codifica a un texto binario
+// O(n)
+std::string Huffman::generateBinString(Node *tree, std::string texto){
+    std::string rst = "";
+
+    for (auto it = texto.begin(); it != texto.end(); it++){
+        rst += tree->getAmountInTree(*it);
+    }
+
+    return rst;
+}
+
+std::string Huffman::decodeBinString(Node *tree, std::string bin){
+    std::string rst = "";
+
+    while (bin.size() != 0){
+        rst += tree->findValueInTree(&bin);
+    }
+
+    return rst;
 }
 
 // Genera una lista de bytes

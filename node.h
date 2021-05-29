@@ -2,6 +2,7 @@
 #define NODE_H
 
 #include <string>
+#include <iostream>
 
 class Node
 {

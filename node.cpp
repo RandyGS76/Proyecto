@@ -3,6 +3,9 @@
 Node::Node(char value, double amount){
     this->value = value;
     this->amount = amount;
+    this->leftChild = NULL;
+    this->rightChild = NULL;
+    this->next = NULL;
 }
 
 char Node::findValueInTree(std::string *paths){
@@ -48,11 +51,7 @@ std::string Node::getAmountInTreeAux(char value, Node *tree){
 
     std::string right = getAmountInTreeAux(value, tree->rightChild);
 
-    if (right.back() == value){
-        return "1" + right;
-    }
-
-    return "";
+    return "1" + right;
 }
 
 void Node::add(Node *next){
