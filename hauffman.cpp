@@ -8,6 +8,64 @@ Huffman::Huffman()
 {
 }
 
+// Genera una lista de bytes
+// O(n)
+std::list<unsigned char> Huffman::toBinary(std::string binaryText){
+    std::list<unsigned char> lista;
+
+    int k = 0;
+    for (auto it = binaryText.end() - 1; it != binaryText.begin() - 1; it--){
+        if (k % 8 == 0){
+            lista.push_front(0);
+        }
+
+        unsigned char value = ((*it) == '1') ? 1 : 0;
+        lista.front() += value * std::pow(2, k % 8);
+
+        k++;
+    }
+
+    if (binaryText.size() % 8 == 0){
+        lista.push_front(0);
+    }
+
+    lista.front() += std::pow(2, binaryText.size() % 8);
+
+    return lista;
+}
+
+// Dada una lista de bytes, lo decodifica a un string binario
+// O(n)
+std::string Huffman::decodeBinary(std::list<unsigned char> data){
+    bool founded = false;
+    std::string rst = "";
+    std::string values[] = {"0", "1"};
+
+    unsigned char current = 0;
+    int total = data.size() * 8;
+
+    for (int i = 0; i < total; i++){
+        if (i % 8 == 0){
+            current = data.front();
+            data.pop_front();
+        }
+
+        unsigned char bin = current & 128;
+        bin = bin >> 7;
+        current = current << 1;
+
+        if (founded){
+            rst += values[bin];
+        }
+
+        if (bin == 1){
+            founded = true;
+        }
+    }
+
+    return rst;
+}
+
 // Genera el mapa de caracteres
 // O(n)
 std::map<char, int> Huffman::generateMap(std::string text){

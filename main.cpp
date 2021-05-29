@@ -26,13 +26,9 @@ int main(int argc, char *argv[])
         rst += tree->getAmountInTree(*it);
     }
 
-    std::cout << "CODED: " << rst << std::endl;
-
     while (rst.size() != 0){
         std::cout << tree->findValueInTree(&rst);
     }
-
-    std::cout << std::endl;
 
     return 0;
     /*QApplication a(argc, argv);

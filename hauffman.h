@@ -6,6 +6,8 @@
 #include <map>
 #include <list>
 #include <iostream>
+#include <math.h>
+
 class Huffman
 {
 public:
@@ -16,6 +18,9 @@ public:
     std::map<char, int> generateMap(std::string text);
     std::list<Node*> generateList(std::map<char, int> mapa);
     static bool compare_huffman(Node * first, Node * second);
+    std::list<unsigned char> toBinary(std::string binaryText);
+    std::string decodeBinary(std::list<unsigned char> data);
+    std::string toBinaryText();
 };
 
 #endif // HAUFFMAN_H
